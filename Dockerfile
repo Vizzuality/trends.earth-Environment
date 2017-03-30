@@ -36,4 +36,4 @@ COPY main.py /project/main.py
 
 WORKDIR /project
 
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["python", "gefcore/main.py"]
