@@ -2,6 +2,7 @@ import logging
 import os
 
 class LocalLogger(object):
+    """Logger implementation for local (dev environment)"""
     def debug(self, text): 
         logging.debug(text)
 
@@ -19,6 +20,7 @@ class LocalLogger(object):
 
 
 class ServerLogger(object):
+    """Logger implementation for server (prod environment)"""
     def debug(self, text): pass
     def info(self, text): pass
     def warn(self, text): pass
@@ -31,6 +33,7 @@ LOGGERS = {
 }
 
 def get_logger_by_env():
+    """Obtain logger according environment"""
     env = os.getenv('ENV')
     logger = LOGGERS.get(env)
     return logger()
