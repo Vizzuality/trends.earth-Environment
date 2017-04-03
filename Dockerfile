@@ -34,6 +34,10 @@ ENV LANGUAGE en_US.UTF-8
 COPY gefcore /project/gefcore
 COPY main.py /project/main.py
 
+COPY entrypoint.sh /project/entrypoint.sh
+
+RUN chown $USER:$USER /project
+
 WORKDIR /project
 
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["./entrypoint.sh"]
