@@ -3,20 +3,28 @@ import requests
 import os
 
 API_URL = os.getenv('API_URL', None)
-JWT_TOKEN = os.getenv('JWT', None)
+EMAIL = os.getenv('EMAIL', None)
+PASSWORD = os.getenv('PASSWORD', None)
 EXECUTION_ID = os.getenv('EXECUTION_ID', None)
 
-HEADERS = {'Authorization': 'Bearer ' + JWT_TOKEN}
-
+def login():
+    response = requests.post(API_URL + '/auth', json={"email":EMAIL, "password": PASSWORD })
+    if response.status_code != 200:
+        print('Error login.')
+        print(response)
+        raise Exception('Error login')
+    return response.json().access_token
 
 def patch_execution(json):
-    response = requests.patch(API_URL + '/api/v1/execution/'+ EXECUTION_ID, json=json, headers=HEADERS)
+    jwt = login()
+
+    response = requests.patch(API_URL + '/api/v1/execution/'+ EXECUTION_ID, json=json, headers={'Authorization': 'Bearer ' + jwt})
     if response.status_code != 200:
         print('Error doing request.')
         print(response)
 
 def save_log(json):
-    response = requests.post(API_URL + '/api/v1/execution/'+ EXECUTION_ID + '/log', json=json, headers=HEADERS)
+    response = requests.post(API_URL + '/api/v1/execution/'+ EXECUTION_ID + '/log', json=json, headers={'Authorization': 'Bearer ' + jwt})
     if response.status_code != 200:
         print('Error doing request.')
         print(response)
