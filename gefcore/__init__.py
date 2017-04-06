@@ -14,7 +14,10 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y%m%d-%H:%M%p',
 )
-params = None
+params = {}
 if len(sys.argv) > 1:
-    params = sys.argv[1]
+    query = sys.argv[1]
+    for item in query.rsplit('&'):
+        parts = item.rsplit('=')
+        params[parts[0]] = parts[1]
 run(params)
