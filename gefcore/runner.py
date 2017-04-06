@@ -4,19 +4,34 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import ee
+import os
 import logging
+from oauth2client.service_account import ServiceAccountCredentials
+
 from gefcore.loggers import get_logger_by_env
 from gefcore.script import main
+from gefcore.api import patch
 
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+gee_credentials = ServiceAccountCredentials.from_p12_keyfile(
+    os.getenv('SERVICE_ACCOUNT', ''),
+    os.path.join(PROJECT_DIR, 'privatekey.pem'),
+    scopes = ee.oauth.SCOPE
+)
+
+ee.Initialize(gee_credentials)
 
 def change_status_ticket():
     """Ticket status changer"""
-    pass
+    patch(json={"status": "RUNNING"})
 
-
-def send_result(result):
+def send_result(results):
     """Results sender"""
-    pass
+    patch(json={"results": results, "status": "FINISHED"})
+    
+    
 
 
 def run(params):
@@ -28,7 +43,6 @@ def run(params):
         change_status_ticket()  # running
         result = main.run(params, logger)
         send_result(result)
-        change_status_ticket()  # success
     except Exception as error:
         change_status_ticket()  # failed
         raise error

@@ -36,6 +36,8 @@ COPY main.py /project/main.py
 
 COPY entrypoint.sh /project/entrypoint.sh
 
+RUN pip install earthengine-api==0.1.102 requests==2.12.4
+
 RUN chown $USER:$USER /project
 
 WORKDIR /project

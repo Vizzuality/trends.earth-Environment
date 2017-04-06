@@ -3,6 +3,8 @@
 import logging
 import os
 
+from gefcore.api import save_log, patch_execution
+
 
 class LocalLogger(object):
     """Logger implementation for local (dev environment)"""
@@ -39,26 +41,31 @@ class ServerLogger(object):
     @staticmethod
     def debug(text):
         """Debug Level"""
+        save_log(json={"text":text, "level":"DEBUG"})
         pass
 
     @staticmethod
     def info(text):
         """Info Level"""
+        save_log(json={"text":text, "level":"INFO"})
         pass
 
     @staticmethod
     def warn(text):
         """Warn Level"""
+        save_log(json={"text":text, "level":"WARN"})
         pass
 
     @staticmethod
     def error(text):
         """Error Level"""
+        save_log(json={"text":text, "level":"ERROR"})
         pass
 
     @staticmethod
     def send_progress(progress):
         """Send Progress"""
+        patch_execution(json={"progress":progress})
         pass
 
 
