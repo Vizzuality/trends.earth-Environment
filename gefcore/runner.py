@@ -14,9 +14,10 @@ from gefcore.script import main
 from gefcore.api import patch
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENV = os.getenv('ENV')
 
 gee_credentials = ServiceAccountCredentials.from_p12_keyfile(
-    os.getenv('SERVICE_ACCOUNT', ''),
+    os.getenv('EE_SERVICE_ACCOUNT', ''),
     os.path.join(PROJECT_DIR, 'privatekey.pem'),
     scopes = ee.oauth.SCOPE
 )
@@ -25,11 +26,18 @@ ee.Initialize(gee_credentials)
 
 def change_status_ticket():
     """Ticket status changer"""
-    patch(json={"status": "RUNNING"})
+    if ENV != 'dev':
+        patch(json={"status": "RUNNING"})
+    else:
+        logging.info('Channing to RUNNING')
 
 def send_result(results):
     """Results sender"""
-    patch(json={"results": results, "status": "FINISHED"})
+    if ENV != 'dev':
+        patch(json={"results": results, "status": "FINISHED"})
+    else:
+        logging.info('Finished -> Results:')
+        logging.info(results)
     
     
 
