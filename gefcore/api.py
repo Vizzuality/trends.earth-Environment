@@ -13,7 +13,7 @@ def login():
         print('Error login.')
         print(response)
         raise Exception('Error login')
-    return response.json().access_token
+    return response.json()['access_token']
 
 def patch_execution(json):
     jwt = login()
