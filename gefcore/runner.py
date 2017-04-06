@@ -11,7 +11,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 from gefcore.loggers import get_logger_by_env
 from gefcore.script import main
-from gefcore.api import patch
+from gefcore.api import patch_execution
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV = os.getenv('ENV')
@@ -29,19 +29,17 @@ if EE_SERVICE_ACOUNT:
 def change_status_ticket():
     """Ticket status changer"""
     if ENV != 'dev':
-        patch(json={"status": "RUNNING"})
+        patch_execution(json={"status": "RUNNING"})
     else:
         logging.info('Channing to RUNNING')
 
 def send_result(results):
     """Results sender"""
     if ENV != 'dev':
-        patch(json={"results": results, "status": "FINISHED"})
+        patch_execution(json={"results": results, "status": "FINISHED"})
     else:
         logging.info('Finished -> Results:')
         logging.info(results)
-    
-    
 
 
 def run(params):

@@ -31,12 +31,12 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
+RUN pip install earthengine-api==0.1.102 requests==2.12.4
+
 COPY gefcore /project/gefcore
 COPY main.py /project/main.py
 
 COPY entrypoint.sh /project/entrypoint.sh
-
-RUN pip install earthengine-api==0.1.102 requests==2.12.4
 
 RUN chown $USER:$USER /project
 
