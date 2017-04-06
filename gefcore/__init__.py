@@ -14,5 +14,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y%m%d-%H:%M%p',
 )
-
+params = None
+if len(sys.argv) > 1:
+    params = sys.argv[1]
 run(sys.argv[1])
