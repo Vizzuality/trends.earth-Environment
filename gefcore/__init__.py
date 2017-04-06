@@ -17,4 +17,4 @@ logging.basicConfig(
 params = None
 if len(sys.argv) > 1:
     params = sys.argv[1]
-run(sys.argv[1])
+run(params)
