@@ -3,8 +3,8 @@ import requests
 import os
 
 API_URL = os.getenv('API_URL', None)
-EMAIL = os.getenv('EMAIL', None)
-PASSWORD = os.getenv('PASSWORD', None)
+EMAIL = os.getenv('API_USER', None)
+PASSWORD = os.getenv('API_PASSWORD', None)
 EXECUTION_ID = os.getenv('EXECUTION_ID', None)
 
 def login():
