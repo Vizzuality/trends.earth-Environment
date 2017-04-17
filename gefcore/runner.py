@@ -13,6 +13,12 @@ from gefcore.loggers import get_logger_by_env
 from gefcore.script import main
 from gefcore.api import patch_execution
 
+logging.basicConfig(
+    level='DEBUG',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y%m%d-%H:%M%p',
+)
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV = os.getenv('ENV')
 EE_SERVICE_ACOUNT = os.getenv('EE_SERVICE_ACCOUNT', None)
