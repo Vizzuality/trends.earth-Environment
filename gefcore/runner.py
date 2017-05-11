@@ -32,10 +32,10 @@ if EE_SERVICE_ACOUNT:
 
     ee.Initialize(gee_credentials)
 
-def change_status_ticket():
+def change_status_ticket(status):
     """Ticket status changer"""
     if ENV != 'dev':
-        patch_execution(json={"status": "RUNNING"})
+        patch_execution(json={"status": status})
     else:
         logging.info('Channing to RUNNING')
 
@@ -54,9 +54,10 @@ def run(params):
         logging.debug('Creating logger')
         # Getting logger
         logger = get_logger_by_env()
-        change_status_ticket()  # running
+        change_status_ticket('RUNNING')  # running
+        params['EXECUTION_ID'] = os.getenv('EXECUTION_ID', '')
         result = main.run(params, logger)
         send_result(result)
     except Exception as error:
-        change_status_ticket()  # failed
+        change_status_ticket('FAILED')  # failed
         raise error
