@@ -32,7 +32,7 @@ class LocalLogger(object):
     @staticmethod
     def send_progress(progress):
         """Send Progress"""
-        LocalLogger.info('Progress ' + progress + '%')
+        LocalLogger.info('Progress ' + str(progress) + '%')
 
 
 class ServerLogger(object):

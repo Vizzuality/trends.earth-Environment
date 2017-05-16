@@ -55,7 +55,8 @@ def run(params):
         # Getting logger
         logger = get_logger_by_env()
         change_status_ticket('RUNNING')  # running
-        params['EXECUTION_ID'] = os.getenv('EXECUTION_ID', '')
+        params['ENV'] = os.getenv('ENV', None)
+        params['EXECUTION_ID'] = os.getenv('EXECUTION_ID', None)
         result = main.run(params, logger)
         send_result(result)
     except Exception as error:
