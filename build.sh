@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t vizzuality/gef-environment:0.0.5 .
+docker build -t vizzuality/gef-environment:0.0.7 .

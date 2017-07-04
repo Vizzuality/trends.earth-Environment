@@ -10,7 +10,6 @@ import logging
 from oauth2client.service_account import ServiceAccountCredentials
 
 from gefcore.loggers import get_logger_by_env
-from gefcore.script import main
 from gefcore.api import patch_execution
 
 logging.basicConfig(
@@ -57,8 +56,10 @@ def run(params):
         change_status_ticket('RUNNING')  # running
         params['ENV'] = os.getenv('ENV', None)
         params['EXECUTION_ID'] = os.getenv('EXECUTION_ID', None)
+        from gefcore.script import main
         result = main.run(params, logger)
         send_result(result)
     except Exception as error:
         change_status_ticket('FAILED')  # failed
+        logger.error(str(error))
         raise error
